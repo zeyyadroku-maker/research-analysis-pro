@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchBar, { SearchFilters } from './components/SearchBar'
 import ResultsCard from './components/ResultsCard'
 import DetailedAnalysisView from './components/DetailedAnalysisView'
@@ -10,6 +10,33 @@ import FileUploadTab from './components/FileUploadTab'
 import { Paper, AnalysisResult } from './types'
 
 type TabType = 'search' | 'upload'
+
+// Counter animation component
+function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const duration = 2000 // 2 seconds
+    const steps = 60
+    const increment = target / steps
+    const stepDuration = duration / steps
+
+    let current = 0
+    const timer = setInterval(() => {
+      current += increment
+      if (current >= target) {
+        setCount(target)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(current))
+      }
+    }, stepDuration)
+
+    return () => clearInterval(timer)
+  }, [target])
+
+  return <span>{count}{suffix}</span>
+}
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>('search')
@@ -217,12 +244,71 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Research Paper Analysis Platform
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-            Conduct systematic research paper analysis with AI-powered credibility assessment, bias detection, and comprehensive quality evaluation.
+          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            The AI That Shows Its Work
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto mb-3">
+            Confidence scores for every claim. Evidence for every assessment. Transparency over hype.
           </p>
+          <p className="text-gray-700 dark:text-gray-300 text-lg max-w-2xl mx-auto mb-4">
+            Evaluate research credibility with AI built to complement expert judgment, not replace it.
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+            Designed collaboratively with 20+ researchers who demanded more than black-box AI.
+          </p>
+        </div>
+
+        {/* Trust Indicators */}
+        <div className="mb-16 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {/* Stat 1: Bias Types */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-accent-blue/10 rounded-full blur-2xl"></div>
+              <div className="relative">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-accent-blue to-blue-600 bg-clip-text text-transparent mb-3">
+                  <AnimatedCounter target={8} />
+                </div>
+                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Bias Types</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Systematically Detected</div>
+              </div>
+            </div>
+
+            {/* Stat 2: Credibility Factors */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-2xl"></div>
+              <div className="relative">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                  <AnimatedCounter target={6} />
+                </div>
+                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Credibility Factors</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Transparently Weighted</div>
+              </div>
+            </div>
+
+            {/* Stat 3: Researchers */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl"></div>
+              <div className="relative">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-3">
+                  <AnimatedCounter target={20} suffix="+" />
+                </div>
+                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Researchers</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Collaborative Design</div>
+              </div>
+            </div>
+
+            {/* Stat 4: Confidence Scores */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-orange-500/10 rounded-full blur-2xl"></div>
+              <div className="relative">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-orange-600 to-red-600 bg-clip-text text-transparent mb-3">
+                  <AnimatedCounter target={100} suffix="%" />
+                </div>
+                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Confidence Scores</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Every Assessment</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Tab Navigation */}
