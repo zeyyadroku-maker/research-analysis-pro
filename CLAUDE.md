@@ -24,16 +24,20 @@ npm run build
 npm start
 
 # Lint code
-npm lint
+npm run lint
 ```
 
 ## Environment Variables
 
-Required in `.env.local`:
-- `CLAUDE_API_KEY` - Claude API key for paper analysis (essential, used in `/api/analyze`)
-- `.env.example` shows legacy variables (no longer used: `NEXT_PUBLIC_CORE_API_KEY`, `NEXT_PUBLIC_GROQ_API_KEY`)
+Create `.env.local` in project root (never commit this file):
+```bash
+# Required: Anthropic Claude API key
+CLAUDE_API_KEY=sk-ant-...
+```
 
-The system changed from CORE API + Groq to OpenAlex API + Claude API. See the note in route.ts files.
+Get API key from: https://console.anthropic.com/account/billing/overview
+
+**Note**: `.env.example` shows legacy variables (no longer used: `NEXT_PUBLIC_CORE_API_KEY`, `NEXT_PUBLIC_GROQ_API_KEY`). The system migrated from CORE API + Groq to OpenAlex API + Claude API.
 
 ## Architecture & Data Flow
 
@@ -106,10 +110,16 @@ When modifying analysis quality, adjust weights in `getWeightsForCombination()` 
 
 ## API Route Structure
 
-### `POST /api/search`
-- Query parameter: `q` (search term), `page` (optional)
+### `GET /api/search`
+- Query parameters:
+  - `q` (required): Search term
+  - `page` (optional): Page number (default: 1)
+  - `author` (optional): Filter by author name
+  - `fromYear` (optional): Filter papers from this year
+  - `toYear` (optional): Filter papers to this year
 - Returns paginated papers from OpenAlex with metadata
 - Handles pagination with `currentPage` and `hasMore` flags
+- Uses OpenAlex polite pool (includes User-Agent header)
 
 ### `POST /api/analyze`
 - Request body: `{ paper: Paper, fullText?: string }`
@@ -117,16 +127,39 @@ When modifying analysis quality, adjust weights in `getWeightsForCombination()` 
 - Returns complete `AnalysisResult` as JSON
 - Claude API model: `claude-3-5-haiku-20241022`
 
+### `POST /api/upload`
+- Handles document upload for direct analysis
+- Supports PDF, TXT, and DOCX files
+- Processes documents through the same pipeline as searched papers
+- Returns extracted text and metadata for subsequent analysis
+
 ## Component Structure
 
-- `SearchBar.tsx` - Search input interface
-- `ResultsCard.tsx` - Individual paper result display
+### Core Components
+- `SearchBar.tsx` - Search input interface with filters
+- `ResultsCard.tsx` - Individual paper result display with bookmark functionality
 - `DetailedAnalysisView.tsx` - Full analysis modal/view
 - `FrameworkAssessmentView.tsx` - Credibility assessment visualization
-- `PaginationBar.tsx` - Search pagination
-- Supporting indicators: `DocumentTypeIndicator.tsx`, `DocumentExtractionIndicator.tsx`
+- `PaginationBar.tsx` - Search pagination controls
+- `Navigation.tsx` - Main navigation bar with dark/light mode toggle
+- `FileUploadTab.tsx` - Document upload interface for direct file analysis
+- `AIDisclaimerBanner.tsx` - Disclaimer banner for AI-generated content
 
-Bookmark state is stored in localStorage via `app/lib/bookmarks.ts`.
+### Supporting Components
+- `DocumentTypeIndicator.tsx` - Visual indicator for document type classification
+- `DocumentExtractionIndicator.tsx` - Shows whether analysis used full text or abstract only
+
+### Pages
+- `page.tsx` (root) - Main search and analysis interface
+- `bookmarks/page.tsx` - Saved papers dashboard
+- `insights/page.tsx` - Insights and analytics view
+
+### Providers
+- `ThemeProvider.tsx` - Dark/light mode theme management
+
+### Utilities
+- `app/lib/bookmarks.ts` - Bookmark state management using localStorage
+- `app/lib/scoreUtils.ts` - Score calculation utilities for credibility assessment
 
 ## Important Implementation Details
 
@@ -152,11 +185,42 @@ Scoring algorithm:
 4. Returns 'interdisciplinary' if multiple fields score competitively
 
 ### Error Handling in Analysis
-- Missing API key returns 400 status
+- Missing API key returns 500 status with "Claude API key not configured" message
 - Document fetch failures fall back to abstract gracefully
 - PDF processing errors fall back to text processing
 - JSON parsing failures caught and logged with raw response
 - All errors include descriptive messages for frontend
+
+### ID Generation
+- Paper IDs are generated using deterministic hash from title+DOI via `hashString()` in search route
+- Ensures consistent IDs across searches for same paper
+- Format: `paper-{hash}` where hash is base36 encoded
+
+### OpenAlex Integration
+- Uses polite pool by including User-Agent header with contact email
+- No API key required for OpenAlex
+- Author search performs two-stage lookup: first finds author ID, then filters works by that ID
+- Year filters converted to OpenAlex date format (from_publication_date, to_publication_date)
+
+### Dark/Light Mode Theme
+- Theme managed by `ThemeProvider.tsx` using React Context
+- Theme state persisted in localStorage
+- Toggle available in `Navigation.tsx` component
+- Tailwind classes use `dark:` prefix for dark mode styling
+- Theme applies globally across all pages and components
+
+### Document Processing Pipeline
+Document processing happens in `app/lib/documentProcessor.ts`:
+1. **PDF Processing** (`processPdfDocument`): Uses `pdf-parse` library to extract text from PDF buffers
+2. **Text Processing** (`processTextDocument`): Processes plain text documents with metadata
+3. **DOCX Processing**: Uses `docx` library (via jszip) to extract text from Word documents
+4. Returns `DocumentChunk[]` structure with sections, page numbers, and metadata
+5. Chunks are used by prompt builder to structure context for Claude API
+
+Document fetching (`app/lib/documentFetcher.ts`):
+- Attempts multiple sources: arXiv, DOI redirects, direct URLs, OpenAlex links
+- Returns buffer with MIME type and source information
+- Gracefully falls back if document unavailable
 
 ## Testing Recommendations
 
