@@ -61,7 +61,7 @@ export default function Home() {
             <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl"></div>
               <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-blue-500 to-blue-700 bg-clip-text text-transparent mb-3">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-blue-400 to-cyan-600 bg-clip-text text-transparent mb-3">
                   <AnimatedCounter target={8} />
                 </div>
                 <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Bias Types</div>
@@ -85,7 +85,7 @@ export default function Home() {
             <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl"></div>
               <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-emerald-500 to-teal-500 bg-clip-text text-transparent mb-3">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-emerald-400 to-teal-600 bg-clip-text text-transparent mb-3">
                   <AnimatedCounter target={20} suffix="+" />
                 </div>
                 <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Researchers</div>
@@ -97,7 +97,7 @@ export default function Home() {
             <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="absolute top-0 right-0 w-20 h-20 bg-orange-500/10 rounded-full blur-2xl"></div>
               <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-orange-500 to-red-600 bg-clip-text text-transparent mb-3">
+                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-orange-400 to-red-600 bg-clip-text text-transparent mb-3">
                   <AnimatedCounter target={100} suffix="%" />
                 </div>
                 <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Confidence Scores</div>
@@ -116,7 +116,7 @@ export default function Home() {
             {/* Step 1 */}
             <div className="relative">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-xl">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-cyan-600 flex items-center justify-center text-white font-bold text-xl">
                   1
                 </div>
                 <div className="flex-1">
@@ -152,7 +152,7 @@ export default function Home() {
             {/* Step 3 */}
             <div className="relative">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-bold text-xl">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-bold text-xl">
                   3
                 </div>
                 <div className="flex-1">
