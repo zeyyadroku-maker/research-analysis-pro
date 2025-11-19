@@ -453,6 +453,27 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Why Choose Syllogos */}
+        <div className="mb-16 max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">
+            Why Choose Syllogos
+          </h2>
+          <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p>
+              Most AI research tools promise perfect analysis but deliver overconfident verdicts with no explanation. They treat every paper the same way and hide their reasoning behind black-box algorithms. You&apos;re expected to trust the output without understanding how it arrived there.
+            </p>
+            <p>
+              We built Syllogos differently. We admit when we&apos;re uncertain, show our confidence levels for every claim, and explain our reasoning with specific evidence. Our framework adapts to your paper&apos;s academic field—a medical study gets different scrutiny than a theoretical essay.
+            </p>
+            <p>
+              We surveyed 20+ researchers before building this tool. They told us they needed transparency over confidence, and field-specific evaluation over generic scores. We built Syllogos because we understand that AI should support expert judgment, not replace it.
+            </p>
+            <p>
+              Our commitment: We never invent citations, never hide uncertainty, and always show confidence percentages. If we can&apos;t reliably assess something, we say so. You deserve AI that shows its work, admits its limits, and respects your expertise.
+            </p>
+          </div>
+        </div>
+
         {/* Tab Navigation */}
         <div className="mb-8 flex gap-4 border-b border-gray-200 dark:border-dark-700">
           <button
