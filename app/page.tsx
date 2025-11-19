@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import SearchBar, { SearchFilters } from './components/SearchBar'
 import ResultsCard from './components/ResultsCard'
 import DetailedAnalysisView from './components/DetailedAnalysisView'
 import PaginationBar from './components/PaginationBar'
 import Navigation from './components/Navigation'
 import FileUploadTab from './components/FileUploadTab'
-import SearchParamsConsumer from './components/SearchParamsConsumer'
 import { Paper, AnalysisResult } from './types'
 
 type TabType = 'search' | 'upload'
@@ -54,6 +53,17 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(false)
   const [lastQuery, setLastQuery] = useState<string>('')
   const [lastFilters, setLastFilters] = useState<SearchFilters | undefined>()
+
+  // Sync URL params to state BEFORE first paint to prevent flash
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const viewParam = params.get('view') as ViewType | null
+
+    // Validate and set view from URL param
+    if (viewParam && (viewParam === 'home' || viewParam === 'search')) {
+      setActiveView(viewParam)
+    }
+  }, []) // Empty deps: only run once on mount
 
   // Apply filters to search results (client-side refinement of API results)
   const applyFilters = (papers: Paper[], filters: SearchFilters) => {
@@ -243,16 +253,13 @@ export default function Home() {
   }
 
   return (
-    <>
-      <SearchParamsConsumer onViewChange={setActiveView} />
-
-      <main className="min-h-screen bg-white dark:bg-dark-900 transition-colors">
-        {/* Navigation */}
-        <Navigation
-          onLogoClick={handleLogoClick}
-          onViewChange={handleViewChange}
-          activeView={activeView}
-        />
+    <main className="min-h-screen bg-white dark:bg-dark-900 transition-colors">
+      {/* Navigation */}
+      <Navigation
+        onLogoClick={handleLogoClick}
+        onViewChange={handleViewChange}
+        activeView={activeView}
+      />
 
       {/* Home View */}
       {activeView === 'home' && (
@@ -672,7 +679,6 @@ export default function Home() {
           }}
         />
       )}
-      </main>
-    </>
+    </main>
   )
 }
