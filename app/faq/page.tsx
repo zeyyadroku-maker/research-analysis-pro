@@ -83,7 +83,7 @@ export default function FAQ() {
         <div className="mt-16 p-8 bg-gray-50 dark:bg-dark-800 rounded-lg border border-gray-200 dark:border-dark-700 text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Still have questions?</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Can't find the answer you're looking for? Contact our support team.
+            Can&apos;t find the answer you&apos;re looking for? Contact our support team.
           </p>
           <a
             href="/contact"

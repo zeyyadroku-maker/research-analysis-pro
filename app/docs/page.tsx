@@ -77,7 +77,7 @@ export default function Docs() {
         <div className="mt-16 p-8 bg-gray-50 dark:bg-dark-800 rounded-lg border border-gray-200 dark:border-dark-700 max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Need Help?</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Can't find what you're looking for? Check our FAQ or contact support.
+            Can&apos;t find what you&apos;re looking for? Check our FAQ or contact support.
           </p>
           <div className="flex gap-4">
             <Link

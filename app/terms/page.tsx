@@ -28,7 +28,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Limitations of Liability</h2>
-            <p>Syllogos is provided "as is" without warranties. We are not liable for decisions made based on our analysis. Always apply professional judgment.</p>
+            <p>Syllogos is provided &quot;as is&quot; without warranties. We are not liable for decisions made based on our analysis. Always apply professional judgment.</p>
           </section>
 
           <section>
