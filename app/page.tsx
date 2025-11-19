@@ -4,452 +4,165 @@ import { useState, useEffect } from 'react'
 import Navigation from './components/Navigation'
 import Link from 'next/link'
 
-// Counter animation component
+// Enhanced animated counter with easing
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const duration = 2000 // 2 seconds
-    const steps = 60
-    const increment = target / steps
-    const stepDuration = duration / steps
+    let startTime: number
+    let animationFrame: number
 
-    let current = 0
-    const timer = setInterval(() => {
-      current += increment
-      if (current >= target) {
-        setCount(target)
-        clearInterval(timer)
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const progress = timestamp - startTime
+      const duration = 2000
+      
+      if (progress < duration) {
+        const nextCount = Math.min(target, Math.floor((progress / duration) * target))
+        setCount(nextCount)
+        animationFrame = requestAnimationFrame(animate)
       } else {
-        setCount(Math.floor(current))
+        setCount(target)
       }
-    }, stepDuration)
+    }
 
-    return () => clearInterval(timer)
+    animationFrame = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animationFrame)
   }, [target])
 
   return <span>{count}{suffix}</span>
 }
 
 export default function Home() {
-
   return (
-    <main className="min-h-screen bg-white dark:bg-dark-900 transition-colors">
-      {/* Navigation */}
+    <main className="flex-1">
       <Navigation onLogoClick={() => window.location.href = '/'} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
-          <div className="mb-20 text-center">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            The AI That Shows Its Work
+      {/* Hero Section */}
+      <div className="relative pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white dark:via-dark-950/50 dark:to-dark-950 pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-sm font-medium mb-8 animate-fade-in">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
+            </span>
+            New: OpenAlex Database Integration
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-gray-900 dark:text-white mb-6 animate-slide-up [animation-delay:100ms]">
+            Research with <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-cyan">
+              Radical Transparency
+            </span>
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-xl md:text-2xl font-medium max-w-4xl mx-auto mb-8 leading-relaxed">
-            Confidence scores for every claim. Evidence for every assessment. Transparency over hype.
+          
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed animate-slide-up [animation-delay:200ms]">
+            The first AI analysis platform that admits uncertainty. We evaluate papers with adaptive frameworks, detecting bias and scoring credibility with verified evidence.
           </p>
-          <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-8 leading-relaxed">
-            Evaluate research credibility with AI built to complement expert judgment, not replace it.
-          </p>
-          <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 italic max-w-2xl mx-auto">
-            Designed collaboratively with 20+ researchers who demanded more than black-box AI.
-          </p>
-        </div>
-
-        {/* Trust Indicators */}
-        <div className="mb-16 max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {/* Stat 1: Bias Types */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl"></div>
-              <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-blue-400 to-cyan-600 bg-clip-text text-transparent mb-3">
-                  <AnimatedCounter target={8} />
-                </div>
-                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Bias Types</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Systematically Detected</div>
-              </div>
-            </div>
-
-            {/* Stat 2: Credibility Factors */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-2xl"></div>
-              <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
-                  <AnimatedCounter target={6} />
-                </div>
-                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Credibility Factors</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Transparently Weighted</div>
-              </div>
-            </div>
-
-            {/* Stat 3: Researchers */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl"></div>
-              <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-emerald-400 to-teal-600 bg-clip-text text-transparent mb-3">
-                  <AnimatedCounter target={20} suffix="+" />
-                </div>
-                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Researchers</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Collaborative Design</div>
-              </div>
-            </div>
-
-            {/* Stat 4: Confidence Scores */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-orange-500/10 rounded-full blur-2xl"></div>
-              <div className="relative">
-                <div className="text-5xl md:text-6xl font-extrabold bg-gradient-to-br from-orange-400 to-red-600 bg-clip-text text-transparent mb-3">
-                  <AnimatedCounter target={100} suffix="%" />
-                </div>
-                <div className="text-xs md:text-sm font-semibold text-gray-900 dark:text-white mb-1">Confidence Scores</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Every Assessment</div>
-              </div>
-            </div>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up [animation-delay:300ms]">
+            <Link
+              href="/search"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl font-semibold shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-300 transform hover:-translate-y-1"
+            >
+              Start Analyzing Free
+            </Link>
+            <Link
+              href="/#how-it-works"
+              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:bg-gray-50 dark:hover:bg-dark-700 text-gray-900 dark:text-white rounded-xl font-semibold transition-all duration-200"
+            >
+              View Demo
+            </Link>
           </div>
         </div>
-
-        {/* How It Works */}
-        <div id="how-it-works" className="mb-16 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            How It Works
-          </h2>
-          <div className="max-w-3xl mx-auto space-y-8">
-            {/* Step 1 */}
-            <div className="relative">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-cyan-600 flex items-center justify-center text-white font-bold text-xl">
-                  1
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Upload or Search
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                    Upload a PDF or search by title, author, or DOI.
-                  </p>
-                  <span className="text-xs font-medium text-blue-600">~30 seconds</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="relative">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white font-bold text-xl">
-                  2
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    AI Evaluates
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                    AI assesses credibility, bias, and methodology—adapting to your paper&apos;s field automatically.
-                  </p>
-                  <span className="text-xs font-medium text-purple-600">~60 seconds</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-bold text-xl">
-                  3
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Review Results
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                    View confidence scores, evidence-backed reasoning, and clear limitations for every assessment.
-                  </p>
-                  <span className="text-xs font-medium text-emerald-600">~5 minutes to review</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="mb-16 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            Key Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Feature 1: Confidence Scores */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-accent-blue/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Confidence Scores</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">See exactly how certain the AI is about each assessment.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">Every evaluation includes a confidence percentage (High/Medium/Low/Uncertain). We show you what we know, what we think, and what we can&apos;t reliably assess—no false confidence.</p>
-            </div>
-
-            {/* Feature 2: Shows Its Work */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-purple-600/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Shows Its Work</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Understand the reasoning and evidence behind every score.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">No black-box verdicts. Each credibility score, bias flag, and assessment includes specific evidence from the paper, clear reasoning, and references to methodology. You see exactly why we reached each conclusion.</p>
-            </div>
-
-            {/* Feature 3: Adaptive Framework */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-emerald-600/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Adaptive Framework</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Evaluation criteria automatically adjust to your academic discipline.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">A medical study needs different scrutiny than a humanities essay. Our AI detects your paper&apos;s field and adapts its evaluation weights—emphasizing statistical validity for empirical work, or source quality for reviews.</p>
-            </div>
-
-            {/* Feature 4: Citation Verification */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-blue-600/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Citation Verification</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Confirms references exist and aren&apos;t AI hallucinations.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">We verify that cited works are real publications, not fabricated references. This catches AI-generated papers that cite non-existent sources, a growing problem in academic integrity that traditional peer review often misses.</p>
-            </div>
-
-            {/* Feature 5: Bias Analysis */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-orange-600/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Bias Analysis</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Identifies eight types of bias with evidence-backed severity ratings.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">Detects selection bias, confirmation bias, funding conflicts, demographic gaps, and more. Each flagged bias includes severity (Low/Medium/High), specific evidence from the text, and our confidence level in that detection.</p>
-            </div>
-
-            {/* Feature 6: Export Analysis */}
-            <div className="p-6 rounded-xl bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-pink-600/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Export Analysis</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Save and share comprehensive evaluations with colleagues.</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">Download full analysis reports including all credibility scores, bias assessments, methodology evaluation, and evidence. Perfect for research teams, grant reviewers, or building your own paper database with quality metrics.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Roadmap */}
-        <div id="roadmap" className="mb-16 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            Product Roadmap
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {/* Q1 2025 */}
-              <div className="relative pl-8 border-l-2 border-accent-blue pb-8">
-                <div className="absolute w-4 h-4 bg-accent-blue rounded-full -left-[9px] top-0"></div>
-                <div className="mb-1 text-sm font-semibold text-accent-blue">Q1 2025</div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">API Launch & Integration</h3>
-                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-accent-blue mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Public REST API for paper analysis integration</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-accent-blue mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Webhook support for automated workflows</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Q2 2025 */}
-              <div className="relative pl-8 border-l-2 border-gray-300 dark:border-gray-600 pb-8">
-                <div className="absolute w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full -left-[9px] top-0"></div>
-                <div className="mb-1 text-sm font-semibold text-gray-500 dark:text-gray-400">Q2 2025</div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Collaboration Features</h3>
-                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Team workspaces with shared paper collections</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Collaborative annotations and comments</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Q3 2025 */}
-              <div className="relative pl-8 border-l-2 border-gray-300 dark:border-gray-600">
-                <div className="absolute w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full -left-[9px] top-0"></div>
-                <div className="mb-1 text-sm font-semibold text-gray-500 dark:text-gray-400">Q3 2025</div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Advanced Analytics</h3>
-                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Comparative analysis across multiple papers</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Research trends visualization and insights</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="mb-16 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            What Researchers Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Testimonial 1: Transparency/Trust */}
-            <div className="p-6 rounded-xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 border border-gray-200 dark:border-dark-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <svg className="w-8 h-8 text-accent-blue/30 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p className="text-gray-700 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                &quot;The confidence percentages changed everything. I can finally see where the AI is guessing versus where it&apos;s certain about the evidence.&quot;
-              </p>
-              <div className="text-sm">
-                <div className="font-semibold text-gray-900 dark:text-white">Postdoctoral Researcher</div>
-                <div className="text-gray-500 dark:text-gray-400">Neuroscience, Medical Research Institute</div>
-              </div>
-            </div>
-
-            {/* Testimonial 2: Field-Specific */}
-            <div className="p-6 rounded-xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 border border-gray-200 dark:border-dark-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <svg className="w-8 h-8 text-purple-600/30 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p className="text-gray-700 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                &quot;It actually understands qualitative research. Most tools try to score everything like a lab experiment, but this one gets ethnographic methods.&quot;
-              </p>
-              <div className="text-sm">
-                <div className="font-semibold text-gray-900 dark:text-white">Associate Professor</div>
-                <div className="text-gray-500 dark:text-gray-400">Anthropology, Liberal Arts College</div>
-              </div>
-            </div>
-
-            {/* Testimonial 3: Time-Saving */}
-            <div className="p-6 rounded-xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-800 dark:to-dark-900 border border-gray-200 dark:border-dark-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <svg className="w-8 h-8 text-emerald-600/30 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p className="text-gray-700 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                &quot;I used to spend hours screening papers before diving deep. Now I can filter out weak methodology in minutes and focus on promising studies.&quot;
-              </p>
-              <div className="text-sm">
-                <div className="font-semibold text-gray-900 dark:text-white">Research Associate</div>
-                <div className="text-gray-500 dark:text-gray-400">Environmental Science, Government Lab</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <footer className="mt-24 border-t border-gray-200 dark:border-dark-700 bg-gray-50 dark:bg-dark-800/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-              {/* Column 1: Product */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Product</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/search" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Features</Link></li>
-                  <li><Link href="/#how-it-works" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">How It Works</Link></li>
-                  <li><Link href="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Pricing</Link></li>
-                  <li><Link href="/#roadmap" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Roadmap</Link></li>
-                </ul>
-              </div>
-
-              {/* Column 2: Company */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Company</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">About</Link></li>
-                  <li><Link href="/contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Contact</Link></li>
-                  <li>
-                    <span className="text-gray-400 dark:text-gray-500 cursor-not-allowed">Careers</span>
-                    <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 italic">coming soon</span>
-                  </li>
-                  <li><Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Blog</Link></li>
-                </ul>
-              </div>
-
-              {/* Column 3: Resources */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Resources</h3>
-                <ul className="space-y-3">
-                  <li><Link href="/faq" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">FAQ</Link></li>
-                  <li><Link href="/docs" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Documentation</Link></li>
-                  <li>
-                    <span className="text-gray-400 dark:text-gray-500 cursor-not-allowed">API</span>
-                    <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 italic">coming soon</span>
-                  </li>
-                  <li><Link href="/contact#support" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Support</Link></li>
-                </ul>
-              </div>
-
-              {/* Column 4: Legal & Social */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Legal</h3>
-                <ul className="space-y-3 mb-6">
-                  <li><Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Terms of Service</Link></li>
-                </ul>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Follow Us</h3>
-                <div className="flex gap-4">
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Bar */}
-            <div className="pt-8 border-t border-gray-200 dark:border-dark-700">
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  © 2025 Syllogos. Transparency in every assessment.
-                </p>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      {/* Stats Section (Glassmorphism) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 mb-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: "Bias Types Detected", value: 8, color: "text-accent-cyan" },
+            { label: "Adaptive Factors", value: 6, color: "text-accent-secondary" },
+            { label: "Researcher Partners", value: 20, suffix: "+", color: "text-accent-tertiary" },
+            { label: "Confidence Score", value: 100, suffix: "%", color: "text-accent-primary" },
+          ].map((stat, idx) => (
+            <div key={idx} className="glass dark:bg-dark-800/40 p-6 rounded-2xl text-center border border-white/20 dark:border-white/10 backdrop-blur-md shadow-sm hover:shadow-md transition-all">
+              <div className={`text-4xl md:text-5xl font-bold mb-2 ${stat.color}`}>
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm font-medium text-gray-600 dark:text-gray-300">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Feature Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Why Researchers Trust Syllogos</h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Built differently. We don&apos;t just summarize; we scrutinize.</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Confidence Metrics",
+              desc: "Every claim comes with a confidence percentage. We highlight what we know and flag what we're guessing.",
+              icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              ),
+              gradient: "from-blue-500/20 to-cyan-500/20"
+            },
+            {
+              title: "Field-Adaptive",
+              desc: "Physics papers aren't judged like History essays. Our framework automatically detects the field and adjusts criteria.",
+              icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              ),
+              gradient: "from-purple-500/20 to-pink-500/20"
+            },
+            {
+              title: "Bias Radar",
+              desc: "We scan for 8 distinct types of bias, from funding conflicts to selection bias, providing evidence for each flag.",
+              icon: (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              ),
+              gradient: "from-orange-500/20 to-red-500/20"
+            }
+          ].map((feature, i) => (
+            <div key={i} className="group relative bg-white dark:bg-dark-800 rounded-2xl p-8 border border-gray-100 dark:border-dark-700 hover:border-gray-200 dark:hover:border-dark-600 transition-all duration-300 hover:shadow-xl overflow-hidden">
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+              <div className="relative z-10">
+                <div className="w-12 h-12 rounded-lg bg-gray-50 dark:bg-dark-700 flex items-center justify-center mb-6 text-gray-900 dark:text-white group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {feature.icon}
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer (simplified) */}
+      <footer className="border-t border-gray-200 dark:border-dark-800 bg-white dark:bg-dark-900 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-gray-500 dark:text-gray-400 text-sm">
+            © 2025 Syllogos. All rights reserved.
+          </div>
+          <div className="flex gap-6">
+             {['Privacy', 'Terms', 'Contact'].map(item => (
+               <Link key={item} href={`/${item.toLowerCase()}`} className="text-gray-500 dark:text-gray-400 hover:text-accent-primary transition-colors text-sm">
+                 {item}
+               </Link>
+             ))}
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }
