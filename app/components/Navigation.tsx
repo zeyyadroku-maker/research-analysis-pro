@@ -56,9 +56,7 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
           <button
             onClick={() => {
               if (pathname !== '/') {
-                router.push('/')
-                // Wait for navigation then set view to home
-                setTimeout(() => onViewChange?.('home'), 100)
+                router.push('/?view=home')
               } else {
                 onViewChange?.('home')
               }
@@ -77,9 +75,7 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
           <button
             onClick={() => {
               if (pathname !== '/') {
-                router.push('/')
-                // Wait for navigation then set view to search
-                setTimeout(() => onViewChange?.('search'), 100)
+                router.push('/?view=search')
               } else {
                 onViewChange?.('search')
               }
@@ -216,8 +212,7 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
               onClick={() => {
                 closeMobileMenu()
                 if (pathname !== '/') {
-                  router.push('/')
-                  setTimeout(() => onViewChange?.('home'), 100)
+                  router.push('/?view=home')
                 } else {
                   onViewChange?.('home')
                 }
@@ -237,8 +232,7 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
               onClick={() => {
                 closeMobileMenu()
                 if (pathname !== '/') {
-                  router.push('/')
-                  setTimeout(() => onViewChange?.('search'), 100)
+                  router.push('/?view=search')
                 } else {
                   onViewChange?.('search')
                 }

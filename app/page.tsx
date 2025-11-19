@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import SearchBar, { SearchFilters } from './components/SearchBar'
 import ResultsCard from './components/ResultsCard'
 import DetailedAnalysisView from './components/DetailedAnalysisView'
@@ -40,7 +41,9 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 }
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<ViewType>('home')
+  const searchParams = useSearchParams()
+  const viewParam = searchParams.get('view') as ViewType | null
+  const [activeView, setActiveView] = useState<ViewType>(viewParam || 'home')
   const [activeTab, setActiveTab] = useState<TabType>('search')
   const [filteredResults, setFilteredResults] = useState<Paper[]>([])
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
@@ -53,6 +56,13 @@ export default function Home() {
   const [hasMore, setHasMore] = useState(false)
   const [lastQuery, setLastQuery] = useState<string>('')
   const [lastFilters, setLastFilters] = useState<SearchFilters | undefined>()
+
+  // Update view when URL param changes
+  useEffect(() => {
+    if (viewParam) {
+      setActiveView(viewParam)
+    }
+  }, [viewParam])
 
   // Apply filters to search results (client-side refinement of API results)
   const applyFilters = (papers: Paper[], filters: SearchFilters) => {
