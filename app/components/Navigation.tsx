@@ -54,7 +54,15 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
         {/* Desktop Navigation - Hidden on mobile */}
         <div className="hidden md:flex items-center gap-4">
           <button
-            onClick={() => onViewChange?.('home')}
+            onClick={() => {
+              if (pathname !== '/') {
+                router.push('/')
+                // Wait for navigation then set view to home
+                setTimeout(() => onViewChange?.('home'), 100)
+              } else {
+                onViewChange?.('home')
+              }
+            }}
             className={`px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 ${
               activeView === 'home' && pathname === '/'
                 ? 'bg-accent-blue text-white'
@@ -67,7 +75,15 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
             Home
           </button>
           <button
-            onClick={() => onViewChange?.('search')}
+            onClick={() => {
+              if (pathname !== '/') {
+                router.push('/')
+                // Wait for navigation then set view to search
+                setTimeout(() => onViewChange?.('search'), 100)
+              } else {
+                onViewChange?.('search')
+              }
+            }}
             className={`px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 ${
               activeView === 'search' && pathname === '/'
                 ? 'bg-accent-blue text-white'
@@ -198,8 +214,13 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
           <div className="max-w-7xl mx-auto px-3 py-4 sm:px-4 lg:px-8 space-y-3">
             <button
               onClick={() => {
-                onViewChange?.('home')
                 closeMobileMenu()
+                if (pathname !== '/') {
+                  router.push('/')
+                  setTimeout(() => onViewChange?.('home'), 100)
+                } else {
+                  onViewChange?.('home')
+                }
               }}
               className={`w-full px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-3 ${
                 activeView === 'home' && pathname === '/'
@@ -214,8 +235,13 @@ export default function Navigation({ onLogoClick, onViewChange, activeView = 'ho
             </button>
             <button
               onClick={() => {
-                onViewChange?.('search')
                 closeMobileMenu()
+                if (pathname !== '/') {
+                  router.push('/')
+                  setTimeout(() => onViewChange?.('search'), 100)
+                } else {
+                  onViewChange?.('search')
+                }
               }}
               className={`w-full px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-3 ${
                 activeView === 'search' && pathname === '/'
