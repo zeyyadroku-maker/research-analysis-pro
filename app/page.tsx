@@ -346,7 +346,7 @@ export default function Home() {
                     AI Evaluates
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                    AI assesses credibility, bias, and methodology—adapting to your paper's field automatically.
+                    AI assesses credibility, bias, and methodology—adapting to your paper&apos;s field automatically.
                   </p>
                   <span className="text-xs font-medium text-purple-600">~60 seconds</span>
                 </div>
