@@ -10,6 +10,7 @@ import FileUploadTab from './components/FileUploadTab'
 import { Paper, AnalysisResult } from './types'
 
 type TabType = 'search' | 'upload'
+type ViewType = 'home' | 'search'
 
 // Counter animation component
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
@@ -39,6 +40,7 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 }
 
 export default function Home() {
+  const [activeView, setActiveView] = useState<ViewType>('home')
   const [activeTab, setActiveTab] = useState<TabType>('search')
   const [filteredResults, setFilteredResults] = useState<Paper[]>([])
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
@@ -178,8 +180,8 @@ export default function Home() {
   }
 
   const handleLogoClick = () => {
-    // Clear all search and filter state
-    setFilteredResults([])
+    // Navigate to home view and clear all search state
+    setActiveView('home')
     setFilteredResults([])
     setAnalysis(null)
     setError(null)
@@ -188,6 +190,10 @@ export default function Home() {
     setLastFilters(undefined)
     setTotalHits(0)
     setHasMore(false)
+  }
+
+  const handleViewChange = (view: ViewType) => {
+    setActiveView(view)
   }
 
   const handleAnalyze = async (paper: Paper) => {
@@ -238,12 +244,17 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white dark:bg-dark-900 transition-colors">
       {/* Navigation */}
-      <Navigation onLogoClick={handleLogoClick} />
+      <Navigation
+        onLogoClick={handleLogoClick}
+        onViewChange={handleViewChange}
+        activeView={activeView}
+      />
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="mb-12 text-center">
+      {/* Home View */}
+      {activeView === 'home' && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
             The AI That Shows Its Work
           </h1>
@@ -502,9 +513,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </div>
+      )}
 
-        {/* Tab Navigation */}
-        <div className="mb-8 flex gap-4 border-b border-gray-200 dark:border-dark-700">
+      {/* Search/Upload View */}
+      {activeView === 'search' && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Tab Navigation */}
+          <div className="mb-8 flex gap-4 border-b border-gray-200 dark:border-dark-700">
           <button
             onClick={() => setActiveTab('search')}
             className={`px-4 py-3 font-medium text-lg border-b-2 transition-all duration-200 ${
@@ -640,7 +656,8 @@ export default function Home() {
             />
           </>
         )}
-      </div>
+        </div>
+      )}
 
       {/* Detailed Analysis Modal */}
       {analysis && (
