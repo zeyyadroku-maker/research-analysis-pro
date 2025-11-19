@@ -311,6 +311,68 @@ export default function Home() {
           </div>
         </div>
 
+        {/* How It Works */}
+        <div className="mb-16 max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
+            How It Works
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Step 1 */}
+            <div className="relative">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-blue-600 flex items-center justify-center text-white font-bold text-xl">
+                  1
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    Upload or Search
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                    Upload a PDF or search by title, author, or DOI.
+                  </p>
+                  <span className="text-xs font-medium text-accent-blue">~30 seconds</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white font-bold text-xl">
+                  2
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    AI Evaluates
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                    AI assesses credibility, bias, and methodology—adapting to your paper's field automatically.
+                  </p>
+                  <span className="text-xs font-medium text-purple-600">~60 seconds</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center text-white font-bold text-xl">
+                  3
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    Review Results
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                    View confidence scores, evidence-backed reasoning, and clear limitations for every assessment.
+                  </p>
+                  <span className="text-xs font-medium text-emerald-600">~5 minutes to review</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Tab Navigation */}
         <div className="mb-8 flex gap-4 border-b border-gray-200 dark:border-dark-700">
           <button
