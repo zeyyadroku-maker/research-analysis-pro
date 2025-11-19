@@ -109,7 +109,7 @@ export default function Home() {
         </div>
 
         {/* How It Works */}
-        <div className="mb-16 max-w-6xl mx-auto">
+        <div id="how-it-works" className="mb-16 max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
             How It Works
           </h2>
@@ -250,6 +250,79 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Roadmap */}
+        <div id="roadmap" className="mb-16 max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
+            Product Roadmap
+          </h2>
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-8">
+              {/* Q1 2025 */}
+              <div className="relative pl-8 border-l-2 border-accent-blue pb-8">
+                <div className="absolute w-4 h-4 bg-accent-blue rounded-full -left-[9px] top-0"></div>
+                <div className="mb-1 text-sm font-semibold text-accent-blue">Q1 2025</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">API Launch & Integration</h3>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-accent-blue mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Public REST API for paper analysis integration</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-accent-blue mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Webhook support for automated workflows</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Q2 2025 */}
+              <div className="relative pl-8 border-l-2 border-gray-300 dark:border-gray-600 pb-8">
+                <div className="absolute w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full -left-[9px] top-0"></div>
+                <div className="mb-1 text-sm font-semibold text-gray-500 dark:text-gray-400">Q2 2025</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Collaboration Features</h3>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Team workspaces with shared paper collections</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Collaborative annotations and comments</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Q3 2025 */}
+              <div className="relative pl-8 border-l-2 border-gray-300 dark:border-gray-600">
+                <div className="absolute w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full -left-[9px] top-0"></div>
+                <div className="mb-1 text-sm font-semibold text-gray-500 dark:text-gray-400">Q3 2025</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Advanced Analytics</h3>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Comparative analysis across multiple papers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span>Research trends visualization and insights</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Testimonials */}
         <div className="mb-16 max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
@@ -309,9 +382,9 @@ export default function Home() {
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Product</h3>
                 <ul className="space-y-3">
                   <li><Link href="/search" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Features</Link></li>
-                  <li><Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">How It Works</Link></li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Pricing</Link></li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Roadmap</Link></li>
+                  <li><Link href="/#how-it-works" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">How It Works</Link></li>
+                  <li><Link href="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Pricing</Link></li>
+                  <li><Link href="/#roadmap" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Roadmap</Link></li>
                 </ul>
               </div>
 
@@ -320,12 +393,12 @@ export default function Home() {
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Company</h3>
                 <ul className="space-y-3">
                   <li><Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">About</Link></li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Contact</Link></li>
+                  <li><Link href="/contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Contact</Link></li>
                   <li>
                     <span className="text-gray-400 dark:text-gray-500 cursor-not-allowed">Careers</span>
                     <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 italic">coming soon</span>
                   </li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Blog</Link></li>
+                  <li><Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Blog</Link></li>
                 </ul>
               </div>
 
@@ -333,13 +406,13 @@ export default function Home() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Resources</h3>
                 <ul className="space-y-3">
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">FAQ</Link></li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Documentation</Link></li>
+                  <li><Link href="/faq" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">FAQ</Link></li>
+                  <li><Link href="/docs" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Documentation</Link></li>
                   <li>
                     <span className="text-gray-400 dark:text-gray-500 cursor-not-allowed">API</span>
                     <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 italic">coming soon</span>
                   </li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Support</Link></li>
+                  <li><Link href="/contact#support" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Support</Link></li>
                 </ul>
               </div>
 
@@ -347,8 +420,8 @@ export default function Home() {
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Legal</h3>
                 <ul className="space-y-3 mb-6">
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Terms of Service</Link></li>
+                  <li><Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-accent-blue dark:hover:text-accent-blue transition-colors">Terms of Service</Link></li>
                 </ul>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Follow Us</h3>
                 <div className="flex gap-4">

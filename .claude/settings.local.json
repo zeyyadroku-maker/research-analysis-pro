@@ -57,7 +57,8 @@
       "Bash(then echo \"✓✓✓ SERVER READY ON PORT 3000 ✓✓✓\")",
       "Bash(if exist .next rmdir /s /q .next)",
       "Bash(git pull:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(then echo \"✓ Server ready\")"
     ],
     "deny": [],
     "ask": []
