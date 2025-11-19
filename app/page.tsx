@@ -39,17 +39,17 @@ export default function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
-          <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="mb-20 text-center">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             The AI That Shows Its Work
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto mb-3">
+          <p className="text-gray-600 dark:text-gray-400 text-xl md:text-2xl font-medium max-w-4xl mx-auto mb-8 leading-relaxed">
             Confidence scores for every claim. Evidence for every assessment. Transparency over hype.
           </p>
-          <p className="text-gray-700 dark:text-gray-300 text-lg max-w-2xl mx-auto mb-4">
+          <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-8 leading-relaxed">
             Evaluate research credibility with AI built to complement expert judgment, not replace it.
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+          <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 italic max-w-2xl mx-auto">
             Designed collaboratively with 20+ researchers who demanded more than black-box AI.
           </p>
         </div>
