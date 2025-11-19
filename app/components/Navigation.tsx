@@ -50,6 +50,12 @@ export default function Navigation({ onLogoClick }: NavigationProps) {
 
         {/* Desktop Navigation - Hidden on mobile */}
         <div className="hidden md:flex items-center gap-4">
+          <Link
+            href="/about"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+          >
+            About
+          </Link>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-lg bg-gray-200 dark:bg-dark-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-dark-600 transition-all duration-200"
@@ -146,6 +152,16 @@ export default function Navigation({ onLogoClick }: NavigationProps) {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200 dark:border-dark-700 bg-white dark:bg-dark-800 animate-slide-down">
           <div className="max-w-7xl mx-auto px-3 py-4 sm:px-4 lg:px-8 space-y-3">
+            <Link
+              href="/about"
+              onClick={closeMobileMenu}
+              className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-dark-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-dark-600 transition-all duration-200 flex items-center gap-3"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span className="font-medium">About</span>
+            </Link>
             <Link
               href="/insights"
               onClick={closeMobileMenu}
