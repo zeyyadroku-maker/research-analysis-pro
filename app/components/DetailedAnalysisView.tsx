@@ -7,7 +7,7 @@ import DocumentTypeIndicator from './DocumentTypeIndicator'
 import FrameworkAssessmentView from './FrameworkAssessmentView'
 import AIDisclaimerBanner from './AIDisclaimerBanner'
 import { getFrameworkGuidelines } from '@/app/lib/adaptiveFramework'
-import { FolderDown, X, Bookmark, CheckCircle } from 'lucide-react'
+import { X, Bookmark, CheckCircle } from 'lucide-react'
 
 interface DetailedAnalysisViewProps {
   analysis: AnalysisResult

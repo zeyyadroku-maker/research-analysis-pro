@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, Filter, X } from 'lucide-react'
+import { Search, Filter } from 'lucide-react'
 
 interface SearchBarProps {
   onSearch: (query: string, filters?: SearchFilters) => void
